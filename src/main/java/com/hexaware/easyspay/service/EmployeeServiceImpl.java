@@ -9,6 +9,9 @@ import com.hexaware.easyspay.entities.Attendance;
 import com.hexaware.easyspay.entities.Employee;
 import com.hexaware.easyspay.entities.Leaves;
 import com.hexaware.easyspay.entities.Payroll;
+import com.hexaware.easyspay.exceptions.AttendanceSubmissionException;
+import com.hexaware.easyspay.exceptions.EmployeeNotFoundException;
+import com.hexaware.easyspay.exceptions.PayrollNotFoundException;
 import com.hexaware.easyspay.repository.IAttendanceRepository;
 import com.hexaware.easyspay.repository.IEmployeeRepository;
 import com.hexaware.easyspay.repository.ILeavesRepository;
@@ -38,7 +41,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	public Employee updatePersonalInformation(int empId, Employee updatedInfo) {
         Employee employee = employeeRepository.findById(empId)
-                .orElse(null);
+                .orElseThrow(()-> new EmployeeNotFoundException("Employee with Id: "+empId+" not found"));
         employee.setEmpName(updatedInfo.getEmpName());
         employee.setEmpDepartment(updatedInfo.getEmpDepartment());
         employee.setPosition(updatedInfo.getPosition());
@@ -48,13 +51,18 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public List<Payroll> getPayStubs(int empId) {
-        return payrollRepository.findByEmployeeEmpId(empId);
+        List<Payroll> payroll = payrollRepository.findByEmployeeEmpId(empId);
+        
+        if(payroll.isEmpty()) {
+        	throw new PayrollNotFoundException("No Payroll records found for Employee Id:"+empId); 	
+        }
+        return payroll;
     }
 
     @Override
     public Attendance submitAttendance(int empId, Attendance attendance) {
         Employee employee = employeeRepository.findById(empId)
-                .orElse(null);
+                .orElseThrow(()-> new EmployeeNotFoundException("Employee with Id: "+empId+" not found"));
         attendance.setEmployee(employee);
         return attendanceRepository.save(attendance);
     }
@@ -62,7 +70,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public Leaves requestLeave(int empId, Leaves leaveRequest) {
         Employee employee = employeeRepository.findById(empId)
-                .orElse(null);
+                .orElseThrow(()-> new EmployeeNotFoundException("Employee with Id:"+empId+" not found"));
         leaveRequest.setEmployee(employee);
         leaveRequest.setLeaveStatus("Pending");
         return leavesRepository.save(leaveRequest);

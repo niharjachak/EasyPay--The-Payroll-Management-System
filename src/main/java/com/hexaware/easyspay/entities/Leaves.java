@@ -1,5 +1,6 @@
 package com.hexaware.easyspay.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -24,10 +25,10 @@ public class Leaves {
 	private Employee employee;
 	
 	
-	private Date startDate;
+	private LocalDate startDate;
 	
 	
-	private Date endDate;
+	private LocalDate endDate;
 	
 	@NotBlank(message="LeaveType should not be null")
 	private String leaveType;
@@ -45,7 +46,7 @@ public class Leaves {
 
 	
 
-	public Leaves(int leaveId, Employee employee, Date startDate, Date endDate,
+	public Leaves(int leaveId, Employee employee, LocalDate startDate, LocalDate endDate,
 			@NotBlank(message = "LeaveType should not be null") String leaveType,
 			@NotBlank(message = "LeaveStatus should not be null") String leaveStatus, Employee manager) {
 		super();
@@ -76,19 +77,19 @@ public class Leaves {
 		this.employee = employee;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

@@ -1,5 +1,6 @@
 package com.hexaware.easyspay.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -39,57 +40,78 @@ public class Employee {
 	private double empsalary;
 	
 	
-	private Date joinDate;
+	private LocalDate joinDate;
 	
 	@OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 	
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<Payroll> payroll;
+	private List<Payroll> payrolls;
+	
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<ComplianceReport> complianceReports;
+    
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	private List<Leaves> leaves;
 
+    
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	private List<Attendance> attendances;
+
+    
+    //Role is missing in my entity class
+    
+    
+    
+  
+    
+    @ManyToOne
+	@JoinColumn(name= "manager_id")
+	private Employee manager;
+    
+    
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Deductions> deductions;
+    
+    
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Benefits> benefits;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<Deductions> deductions;
 	
-	@ManyToOne
-	@JoinColumn(name= "manager_id")
-	private Employee manager;
-	
-	 @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-	    private List<Payroll> payrolls;
-
-	 @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-	    private List<Leaves> leaves;
-
-	 @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-	    private List<Attendance> attendances;
-
 	public Employee() {
 		super();
 	}
-
-
+	
+	
+	
+	
 	
 
+	public Employee(int empId, @Size(max = 50) @NotBlank(message = "Employee name Should not be blank") String empName,
+			@NotBlank(message = "Employee position Should not be blank") String position,
+			@NotBlank(message = "Employee department Should not be blank") String empDepartment,
+			@NotNull double empsalary, LocalDate joinDate, User user,List<ComplianceReport> complianceReports, List<Benefits> benefits, List<Deductions> deductions,
+			Employee manager, List<Payroll> payrolls, List<Leaves> leaves, List<Attendance> attendances) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.position = position;
+		this.empDepartment = empDepartment;
+		this.empsalary = empsalary;
+		this.joinDate = joinDate;
+		this.user = user;
+		
+		this.complianceReports = complianceReports;
+		this.benefits = benefits;
+		this.deductions = deductions;
+		this.manager = manager;
+		this.payrolls = payrolls;
+		this.leaves = leaves;
+		this.attendances = attendances;
+	}
 	
-	public List<Payroll> getPayroll() {
-		return payroll;
-	}
-
-
-
-
-
-	public void setPayroll(List<Payroll> payroll) {
-		this.payroll = payroll;
-	}
-
 
 
 
@@ -148,42 +170,13 @@ public class Employee {
 
 
 
-
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
 
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-
-
-
-
-	public Employee(int empId, @Size(max = 50) @NotBlank(message = "Employee name Should not be blank") String empName,
-			@NotBlank(message = "Employee position Should not be blank") String position,
-			@NotBlank(message = "Employee department Should not be blank") String empDepartment,
-			@NotNull double empsalary, Date joinDate, User user, List<Payroll> payroll,
-			List<ComplianceReport> complianceReports, List<Benefits> benefits, List<Deductions> deductions,
-			Employee manager, List<Payroll> payrolls, List<Leaves> leaves, List<Attendance> attendances) {
-		super();
-		this.empId = empId;
-		this.empName = empName;
-		this.position = position;
-		this.empDepartment = empDepartment;
-		this.empsalary = empsalary;
-		this.joinDate = joinDate;
-		this.user = user;
-		this.payroll = payroll;
-		this.complianceReports = complianceReports;
-		this.benefits = benefits;
-		this.deductions = deductions;
-		this.manager = manager;
-		this.payrolls = payrolls;
-		this.leaves = leaves;
-		this.attendances = attendances;
-	}
-
-
-
 
 
 	public String getPosition() {
@@ -191,14 +184,6 @@ public class Employee {
 	}
 
 
-	public int getEmpeId() {
-		return empId;
-	}
-
-
-	public void setEmpId(int employeeId) {
-		this.empId = employeeId;
-	}
 
 
 
@@ -284,12 +269,12 @@ public class Employee {
 	}
 
 
-	public Date getJoinDate() {
+	public LocalDate getJoinDate() {
 		return joinDate;
 	}
 
 
-	public void setJoinDate(Date joinDate) {
+	public void setJoinDate(LocalDate joinDate) {
 		this.joinDate = joinDate;
 	}
 
@@ -321,7 +306,7 @@ public class Employee {
 	public String toString() {
 		return "Employee [empId=" + empId + ", empName=" + empName + ", position=" + position + ", empDepartment="
 				+ empDepartment + ", empsalary=" + empsalary + ", joinDate=" + joinDate + ", user=" + user
-				+ ", payroll=" + payroll + ", complianceReports=" + complianceReports + ", benefits=" + benefits
+				+  ", complianceReports=" + complianceReports + ", benefits=" + benefits
 				+ ", deductions=" + deductions + ", manager=" + manager + ", payrolls=" + payrolls + ", leaves="
 				+ leaves + ", attendances=" + attendances + "]";
 	}

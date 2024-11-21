@@ -10,10 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
 @Table(name="payroll")
@@ -27,29 +26,38 @@ public class Payroll {
 	@JoinColumn(name = "emp_id",nullable= false)
 	private Employee employee;
 	
-	@NotNull(message="grosspay cannot be null")
+	@NotNull(message="grossPay cannot be null")
 	@DecimalMin(value = "0.0", inclusive = true, message = "Gross pay must be 0 or greater.")
-	private double grosspay;
+	private double grossPay;
+	
+	@NotNull(message="netPay cannot be null")
+	@DecimalMin(value = "0.0", inclusive = true, message = "Gross pay must be 0 or greater.")
+	private double netPay;
+	
 	
 	@NotNull(message="Benifits cannot be null")
 	@DecimalMin(value = "0.0", inclusive = true, message = "Benefits must be 0 or greater.")
-	private double benifits;
-	
-	@NotNull(message="totalSalary cannot be null")
-	
-
-	
-	
-	private LocalDate payrollDate;
-
+	private double benefits;
 	
 	@NotNull(message="Deductions cannot be null")
 	@DecimalMin(value = "0.0", inclusive = true, message = "Deductions must be 0 or greater.")
 	private double deductions;
 	
+	
 	private LocalDate startDate;
 	
+	
 	private LocalDate endDate;
+	
+	
+	@NotNull(message = "Payroll date must not be null.")
+    @PastOrPresent(message = "Payroll date cannot be in the future.")
+	private LocalDate payrollDate;
+
+	
+	
+	
+	
 	
 	
 	public Payroll() {
@@ -57,24 +65,25 @@ public class Payroll {
 	}
 
 
+
 	public Payroll(int payrollId, Employee employee,
-			@NotNull(message = "grosspay cannot be null") @DecimalMin(value = "0.0", inclusive = true, message = "Gross pay must be 0 or greater.") double grosspay,
-			@NotNull(message = "Benifits cannot be null") @DecimalMin(value = "0.0", inclusive = true, message = "Benefits must be 0 or greater.") double benifits,
-			@NotNull(message = "totalSalary cannot be null") LocalDate payrollDate,
+			@NotNull(message = "grossPay cannot be null") @DecimalMin(value = "0.0", inclusive = true, message = "Gross pay must be 0 or greater.") double grossPay,
+			@NotNull(message = "netPay cannot be null") @DecimalMin(value = "0.0", inclusive = true, message = "Gross pay must be 0 or greater.") double netPay,
+			@NotNull(message = "Benifits cannot be null") @DecimalMin(value = "0.0", inclusive = true, message = "Benefits must be 0 or greater.") double benefits,
 			@NotNull(message = "Deductions cannot be null") @DecimalMin(value = "0.0", inclusive = true, message = "Deductions must be 0 or greater.") double deductions,
-			LocalDate startDate, LocalDate endDate) {
+			LocalDate startDate, LocalDate endDate,
+			@NotNull(message = "Payroll date must not be null.") @PastOrPresent(message = "Payroll date cannot be in the future.") LocalDate payrollDate) {
 		super();
 		this.payrollId = payrollId;
 		this.employee = employee;
-		this.grosspay = grosspay;
-		this.benifits = benifits;
-		this.payrollDate = payrollDate;
+		this.grossPay = grossPay;
+		this.netPay = netPay;
+		this.benefits = benefits;
 		this.deductions = deductions;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.payrollDate = payrollDate;
 	}
-
-
 
 
 	public LocalDate getStartDate() {
@@ -110,19 +119,19 @@ public class Payroll {
 	}
 
 	public double getGrosspay() {
-		return grosspay;
+		return grossPay;
 	}
 
-	public void setGrosspay(double grosspay) {
-		this.grosspay = grosspay;
+	public void setGrosspay(double grossPay) {
+		this.grossPay = grossPay;
 	}
 
-	public double getBenifits() {
-		return benifits;
+	public double getBenefits() {
+		return benefits;
 	}
 
-	public void setBenifits(double benifits) {
-		this.benifits = benifits;
+	public void setBenifits(double benefits) {
+		this.benefits = benefits;
 	}
 
 	public double getDeductions() {
@@ -142,13 +151,31 @@ public class Payroll {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Payroll [payrollId=" + payrollId + ", employee=" + employee + ", grosspay=" + grosspay + ", benifits="
-				+ benifits + ", payrollDate=" + payrollDate + ", deductions=" + deductions + ", startDate=" + startDate
-				+ ", endDate=" + endDate + "]";
+	public double getNetPay() {
+		return netPay;
 	}
 
+
+
+	public void setNetPay(double netPay) {
+		this.netPay = netPay;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Payroll [payrollId=" + payrollId + ", employee=" + employee + ", grossPay=" + grossPay + ", netPay="
+				+ netPay + ", benefits=" + benefits + ", deductions=" + deductions + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", payrollDate=" + payrollDate + "]";
+	}
+
+
+
+	
+
+
+	
 	
 	
 	
