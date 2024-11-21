@@ -35,40 +35,49 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<ComplianceReport> complianceReports;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<Benefits> benefits;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<Deductions> deductions;
     
 	 @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	    private List<Leaves> leaves;
 
 	 @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	    private List<Attendance> attendances;
+	 
+	
+	    @ManyToOne
+	    @JoinColumn(name = "role_id", referencedColumnName = "roleID")
+	    private Role role; 
 
-
+	    
+	    
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private Employee manager;
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "deduction_id", referencedColumnName = "deductionId")
+    private Deductions deductions;
+
+    @ManyToOne
+    @JoinColumn(name = "benefit_id", referencedColumnName = "benifitId")
+    private Benefits benefits;
 
     public Employee() {
         super();
     }
 
     public Employee(int empId, String empName, String position, String empDepartment, double empsalary, Date joinDate,
-                    User user, Employee manager) {
-        super();
-        this.empId = empId;
-        this.empName = empName;
-        this.position = position;
-        this.empDepartment = empDepartment;
-        this.empsalary = empsalary;
-        this.joinDate = joinDate; 
-        this.user = user; 
-        this.manager = manager;
-    }
+            User user, Deductions deductions, Benefits benefits) {
+this.empId = empId;
+this.empName = empName;
+this.position = position;
+this.empDepartment = empDepartment;
+this.empsalary = empsalary;
+this.joinDate = joinDate;
+this.user = user;
+this.deductions = deductions;
+this.benefits = benefits;
+}
 
    
 
@@ -152,21 +161,7 @@ public class Employee {
 		this.complianceReports = complianceReports;
 	}
 
-	public List<Benefits> getBenefits() {
-		return benefits;
-	}
 
-	public void setBenefits(List<Benefits> benefits) {
-		this.benefits = benefits;
-	}
-
-	public List<Deductions> getDeductions() {
-		return deductions;
-	}
-
-	public void setDeductions(List<Deductions> deductions) {
-		this.deductions = deductions;
-	}
 
     
 }

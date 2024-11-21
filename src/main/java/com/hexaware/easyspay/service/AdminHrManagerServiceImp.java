@@ -11,25 +11,25 @@ import com.hexaware.easyspay.entities.ComplianceReport;
 import com.hexaware.easyspay.entities.Employee;
 import com.hexaware.easyspay.entities.PayrollPolicy;
 import com.hexaware.easyspay.entities.User;
-import com.hexaware.easyspay.repository.ComplianceReportRepository;
-import com.hexaware.easyspay.repository.EmployeeRepository;
-import com.hexaware.easyspay.repository.PayrollPolicyRepository;
-import com.hexaware.easyspay.repository.UserRepository;
+import com.hexaware.easyspay.repository.IComplianceReportRepository;
+import com.hexaware.easyspay.repository.IEmployeeRepository;
+import com.hexaware.easyspay.repository.IPayrollPolicyRepository;
+import com.hexaware.easyspay.repository.IUserRepository;
 
 @Service
 public class AdminHrManagerServiceImp implements IAdminHrManagerService {
 
     @Autowired
-    private EmployeeRepository employeeRepo;
+    private IEmployeeRepository employeeRepo;
     
     @Autowired
-    private UserRepository userRepo;
+    private IUserRepository userRepo;
     
     @Autowired
-    private PayrollPolicyRepository payrollPolicyRepo;
+    private IPayrollPolicyRepository payrollPolicyRepo;
     
     @Autowired
-    private ComplianceReportRepository complianceReportRepo;
+    private IComplianceReportRepository complianceReportRepo;
 
     
     

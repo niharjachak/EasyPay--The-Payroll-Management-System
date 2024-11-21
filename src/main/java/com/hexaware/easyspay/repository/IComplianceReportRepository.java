@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.hexaware.easyspay.entities.ComplianceReport;
 
 @Repository
-public interface ComplianceReportRepository extends JpaRepository<ComplianceReport,Integer> {
+public interface IComplianceReportRepository extends JpaRepository<ComplianceReport,Integer> {
 
 }

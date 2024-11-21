@@ -6,29 +6,32 @@ import java.util.List;
 import com.hexaware.easyspay.entities.Benefits;
 import com.hexaware.easyspay.entities.Deductions;
 import com.hexaware.easyspay.entities.Payroll;
+import com.hexaware.easyspay.exception.PayrollNotFoundException;
+import com.hexaware.easyspay.exception.BenefitNotFoundException;
+import com.hexaware.easyspay.exception.DeductionNotFoundException;
 
 public interface IPayrollProcessorService {
 
     // Payroll Calculation
-    Payroll calculatePayroll(int empId, LocalDate payrollDate);
+    Payroll calculatePayroll(int empId, LocalDate payrollDate) throws PayrollNotFoundException;
 
     // Payroll Data Verification
-    boolean verifyPayrollData(Payroll payroll);
+    boolean verifyPayrollData(Payroll payroll) throws PayrollNotFoundException;
 
     // Benefits Management
-    Benefits addBenefit(Benefits benefit);
-    Benefits updateBenefit(Benefits benefit);
-    void deleteBenefit(int benefitId);
-    Benefits getBenefitById(int benefitId);
+    Benefits addBenefit(Benefits benefit) throws BenefitNotFoundException;
+    Benefits updateBenefit(Benefits benefit) throws BenefitNotFoundException;
+    void deleteBenefit(int benefitId) throws BenefitNotFoundException;
+    Benefits getBenefitById(int benefitId) throws BenefitNotFoundException;
     List<Benefits> getAllBenefits();
 
     // Deductions Management
-    Deductions addDeduction(Deductions deduction);
-    Deductions updateDeduction(Deductions deduction);
-    void deleteDeduction(int deductionId);
-    Deductions getDeductionById(int deductionId);
+    Deductions addDeduction(Deductions deduction) throws DeductionNotFoundException;
+    Deductions updateDeduction(Deductions deduction) throws DeductionNotFoundException;
+    void deleteDeduction(int deductionId) throws DeductionNotFoundException;
+    Deductions getDeductionById(int deductionId) throws DeductionNotFoundException;
     List<Deductions> getAllDeductions();
 
     // Payment Processing
-    void processPayment(Payroll payroll);
+    void processPayment(Payroll payroll) throws PayrollNotFoundException;
 }

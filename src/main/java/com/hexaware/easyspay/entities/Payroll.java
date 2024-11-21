@@ -24,10 +24,16 @@ public class Payroll {
     @DecimalMin(value = "0.0", inclusive = true, message = "Deductions must be 0 or greater.")
     private double deductions;
 
+	private LocalDate startDate;
+	
+	private LocalDate endDate;
+    
     @NotNull(message = "Payroll date must not be null.")
     @PastOrPresent(message = "Payroll date cannot be in the future.")
     private LocalDate payrollDate;
 
+    private double netPay;
+    
     @ManyToOne
     @JoinColumn(name = "empId", nullable = false) 
     private Employee employee;
@@ -36,16 +42,27 @@ public class Payroll {
         super();
     }
 
-    public Payroll(int payrollId, double grossPay, double benefits, double deductions, LocalDate payrollDate, Employee employee) {
+    public Payroll(int payrollId, double grossPay, double benefits, double deductions, LocalDate payrollDate, LocalDate startDate ,LocalDate endDate,double netPay,Employee employee) {
         this.payrollId = payrollId;
         this.grossPay = grossPay;
         this.benefits = benefits;
         this.deductions = deductions;
+        this.startDate = startDate;
+        this.startDate = endDate;
         this.payrollDate = payrollDate;
         this.employee = employee;
+        this.netPay = netPay;
     }
 
-    public int getPayrollId() {
+    public double getNetPay() {
+		return netPay;
+	}
+
+	public void setNetPay(double netPay) {
+		this.netPay = netPay;
+	}
+
+	public int getPayrollId() {
         return payrollId;
     }
 
@@ -92,4 +109,22 @@ public class Payroll {
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+    
+    
 }

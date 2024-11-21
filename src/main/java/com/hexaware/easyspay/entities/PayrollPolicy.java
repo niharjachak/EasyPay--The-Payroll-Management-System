@@ -95,4 +95,14 @@ public class PayrollPolicy {
     public void setTaxPercentage(double taxPercentage) {
         this.taxPercentage = taxPercentage;
     }
+
+
+	@Override
+	public String toString() {
+		return "PayrollPolicy [policyId=" + policyId + ", policyName=" + policyName + ", policyDesc=" + policyDesc
+				+ ", baseSalary=" + baseSalary + ", overtimeRate=" + overtimeRate + ", taxPercentage=" + taxPercentage
+				+ "]";
+	}
+    
+    
 }

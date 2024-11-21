@@ -7,6 +7,6 @@ import com.hexaware.easyspay.entities.Employee;
 
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
+public interface IEmployeeRepository extends JpaRepository<Employee,Integer> {
 
 }
